@@ -18,9 +18,12 @@ func letterCombinations(digits string) []string {
 		"8": "tuv",
 		"9": "wxyz",
 	}
+	for _, l := range digits {
+		
+	}
 	return nil
 }
 
 func main() {
-	fmt.Println("14")
+	fmt.Println(letterCombinations("14"))
 }
