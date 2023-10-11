@@ -6,18 +6,23 @@ import (
 )
 
 func main() {
-	var f int32 = 10
 	layout := "15:04"
-	parsedTime, _ := time.Parse(layout, "15:54")
-	currentTime := time.Now()
-	currentDate := time.Date(currentTime.Year(), currentTime.Month(), currentTime.Day(), 0, 0, 0, 0, currentTime.Location())
-	resultTime := time.Date(currentDate.Year(), currentDate.Month(), currentDate.Day(), parsedTime.Hour(), parsedTime.Minute(), 0, 0, currentDate.Location())
-	resultTime = resultTime.Add(-time.Minute * time.Duration(f))
+	fromTime := "09:00"
+	toTime := "03:00"
+	parsedFromTime, _ := time.Parse(layout, fromTime)
+	parsedToTime, _ := time.Parse(layout, toTime)
+	fmt.Println(parsedFromTime.After(parsedToTime))
+	if parsedFromTime.After(parsedToTime) {
+		parsedToTime = parsedToTime.Add(time.Hour * 24)
+	}
+	fmt.Println(parsedFromTime.After(parsedToTime))
 
+	// currentDate := time.Now().Format("2006-01-02") // Get today's date in "YYYY-MM-DD" format
 
-	// Compare the resulting time with the current time
-	check := currentTime.After(resultTime)
+	// Combine the parsed times with today's date
+	fromDateTime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), parsedFromTime.Hour(), parsedFromTime.Minute(), 0, 0, time.Now().Location())
+	toDateTime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), parsedToTime.Hour(), parsedToTime.Minute(), 0, 0, time.Now().Location())
 
-	fmt.Println("resultTime:", resultTime)
-	fmt.Println("check:", check)
+	fmt.Println(fromDateTime.Format("2006-01-02 15:04:05"))
+	fmt.Println(toDateTime.Format("2006-01-02 15:04:05"))
 }
