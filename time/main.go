@@ -6,23 +6,22 @@ import (
 )
 
 func main() {
-	layout := "15:04"
-	fromTime := "09:00"
-	toTime := "03:00"
-	parsedFromTime, _ := time.Parse(layout, fromTime)
-	parsedToTime, _ := time.Parse(layout, toTime)
-	fmt.Println(parsedFromTime.After(parsedToTime))
-	if parsedFromTime.After(parsedToTime) {
-		parsedToTime = parsedToTime.Add(time.Hour * 24)
+	fromDate := "2023-12-29 00:00:00"
+	toDate := "2023-12-29 00:00:00"
+
+	fromDateParsed, err := time.Parse("2006-01-02 15:04:05", fromDate)
+	fmt.Println("error parsing fromDate: ", err)
+	toDateParsed, err := time.Parse("2006-01-02 15:04:05", toDate)
+	fmt.Println("error parsing toDate: ", err)
+
+	// Create a range of dates
+	var formattedDates []string
+	for current := fromDateParsed; current.Before(toDateParsed) || current.Equal(toDateParsed); current = current.AddDate(0, 0, 1) {
+		formattedDates = append(formattedDates, current.Format("2006-01-02"))
 	}
-	fmt.Println(parsedFromTime.After(parsedToTime))
 
-	// currentDate := time.Now().Format("2006-01-02") // Get today's date in "YYYY-MM-DD" format
+	// Join the formatted dates with commas
+	result := fmt.Sprintf("%s", formattedDates)
+	fmt.Println(result)
 
-	// Combine the parsed times with today's date
-	fromDateTime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), parsedFromTime.Hour(), parsedFromTime.Minute(), 0, 0, time.Now().Location())
-	toDateTime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), parsedToTime.Hour(), parsedToTime.Minute(), 0, 0, time.Now().Location())
-
-	fmt.Println(fromDateTime.Format("2006-01-02 15:04:05"))
-	fmt.Println(toDateTime.Format("2006-01-02 15:04:05"))
 }
