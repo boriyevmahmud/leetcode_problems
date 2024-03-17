@@ -18,19 +18,6 @@ func sendRequest(url string) {
 }
 
 func main() {
-	url := "http://localhost:1237/v1/aggregate-customers"
-
-	// Number of requests to send
-	// numRequests := 2
-
-	go sendRequest(url)
-	time.Sleep(2 * time.Millisecond)
-	sendRequest(url)
-	time.Sleep(time.Second * 5)
-
-	// Loop to send requests
-	// for i := 0; i < numRequests; i++ {
-	// 	sendRequest(url)
-	// 	// time.Sleep(time.Second) // Wait for one second between requests
-	// }
+	var day = 0
+	fmt.Println(time.Weekday(day))
 }
